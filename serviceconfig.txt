@@ -1,0 +1,5 @@
+#Variables
+ADAPTERSERVICENAME=thunderboardmonitor.service
+SYSTEMDPATH=/lib/systemd/system
+PYTHONFILE=env.py
+PYTHONBIN=/usr/bin/python3

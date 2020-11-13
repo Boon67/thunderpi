@@ -7,6 +7,32 @@ if [ "$EUID" -ne 0 ]
   exit
 fi
 
+###################################
+apt-get update
+apt-get upgrade -y
+apt remove phpmyadmin -y
+apt remove apache2 -y
+apt remove mysql -y
+apt install mysql -y
+apt install apache2 -y
+apt install phpmyadmin -y
+
+echo "------------Configuring Database------------"]
+MYSQL=`which mysql`
+Q1="CREATE DATABASE IF NOT EXISTS $DBNAME;"
+Q2="GRANT ALL ON $DBNAME.* TO '$DBLOGIN'@'localhost' IDENTIFIED BY '$DBPASSWORD';"
+Q3="FLUSH PRIVILEGES;"
+SQL="${Q1}${Q2}${Q3}"
+echo "$SQL"
+$MYSQL -e "$SQL"
+$MYSQL -u$DBLOGIN -p$DBPASSWORD $DBNAME -e "source schema.sql"
+
+#mysql_secure_installation
+#sudo dpkg-reconfigure phpmyadmin
+
+###################################
+
+
 SCRIPTDIR="${0%/*}"
 
 CONFIGFILENAME="serviceconfig.txt"

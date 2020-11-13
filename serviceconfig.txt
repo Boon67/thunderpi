@@ -3,3 +3,6 @@ ADAPTERSERVICENAME=thunderboardmonitor.service
 SYSTEMDPATH=/lib/systemd/system
 PYTHONFILE=env.py
 PYTHONBIN=/usr/bin/python3
+DBNAME=env
+DBLOGIN=environment_logger
+DBPASSWORD=password

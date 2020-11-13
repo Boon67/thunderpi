@@ -10,10 +10,10 @@ fi
 ###################################
 apt-get update
 apt-get upgrade -y
-apt remove phpmyadmin -y
-apt remove apache2 -y
-apt remove mysql -y
-apt install mysql -y
+apt purge phpmyadmin -y
+apt purge apache2 -y
+apt purge mariadb-server -y
+apt install mariadb-server -y
 apt install apache2 -y
 apt install phpmyadmin -y
 

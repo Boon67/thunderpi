@@ -1,15 +1,10 @@
--- phpMyAdmin SQL Dump
--- version 4.6.6deb5
--- https://www.phpmyadmin.net/
---
--- Host: localhost:3306
--- Generation Time: Nov 10, 2020 at 07:46 AM
--- Server version: 10.3.25-MariaDB-0+deb10u1
--- PHP Version: 7.3.19-1~deb10u1
-
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
+
+SET @DBNAME:= 'env';
+SET @DBLOGIN:= 'environment_logger';
+SET @DBPASSWORD:='password';
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -19,12 +14,13 @@ SET time_zone = "+00:00";
 --
 -- Database: `environmental`
 --
-CREATE DATABASE `environmental`;
+DROP DATABASE @DBNAME;
+CREATE DATABASE @DBNAME;
 -- --------------------------------------------------------
-DROP USER 'environment_logger'@localhost;
-CREATE USER 'environment_logger'@localhost IDENTIFIED BY 'password';
-GRANT ALL PRIVILEGES ON environmental.* TO 'environment_logger'@localhost IDENTIFIED BY 'password';
-use 'environmental'
+DROP USER @DBLOGIN@localhost;
+CREATE USER @DBLOGIN@localhost IDENTIFIED BY @DBPASSWORD;
+GRANT ALL PRIVILEGES ON environmental.* TO @DBLOGIN@localhost IDENTIFIED BY @DBPASSWORD;
+use environmental
 
 --
 -- Table structure for table `assets`

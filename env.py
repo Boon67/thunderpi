@@ -16,7 +16,7 @@ DB_USER="environment_logger"
 DB_PASSWORD="password"
 DB_HOST="localhost"
 DB_PORT=3306
-DB_DATABASE="environmental"
+DB_DATABASE="env"
 DB_TABLE="records"
 
 

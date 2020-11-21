@@ -1,27 +1,45 @@
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
-
-SET @DBNAME:= 'env';
-SET @DBLOGIN:= 'environment_logger';
-SET @DBPASSWORD:='password';
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
 --
 -- Database: `environmental`
 --
-DROP DATABASE @DBNAME;
-CREATE DATABASE @DBNAME;
--- --------------------------------------------------------
-DROP USER @DBLOGIN@localhost;
-CREATE USER @DBLOGIN@localhost IDENTIFIED BY @DBPASSWORD;
-GRANT ALL PRIVILEGES ON environmental.* TO @DBLOGIN@localhost IDENTIFIED BY @DBPASSWORD;
-use environmental
+SET @DBNAME= 'env';
+SET @DBLOGIN= 'environment_logger';
+SET @DBPASSWORD='password';
 
+SET @query = CONCAT('DROP DATABASE `', @DBNAME, '`');
+PREPARE stmt FROM @query;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+SET @query = CONCAT('CREATE DATABASE `', @DBNAME, '`');
+PREPARE stmt FROM @query;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-----------------------------------------------------------
+SET @query = CONCAT('DROP USER "',@DBLOGIN,'"@"localhost" ');
+PREPARE stmt FROM @query; 
+EXECUTE stmt; 
+DEALLOCATE PREPARE stmt;
+
+SET @query = CONCAT('CREATE USER "',@DBLOGIN,'"@"localhost" IDENTIFIED BY "',@DBPASSWORD,'" ');
+PREPARE stmt FROM @query; 
+EXECUTE stmt; 
+DEALLOCATE PREPARE stmt;
+
+SET @query = CONCAT('
+    GRANT ALL PRIVILEGES ON ',@DBNAME, '.* TO "',@DBLOGIN,'"@"localhost" IDENTIFIED BY "',@DBPASSWORD,'" ');
+        
+    /*WITH
+          MAX_QUERIES_PER_HOUR 120 MAX_CONNECTIONS_PER_HOUR 60 MAX_UPDATES_PER_HOUR 60 
+          MAX_USER_CONNECTIONS 2' */
+PREPARE stmt FROM @query; 
+EXECUTE stmt; 
+DEALLOCATE PREPARE stmt;
+
+USE env
 --
 -- Table structure for table `assets`
 --
@@ -118,6 +136,4 @@ ALTER TABLE `sites`
 --
 ALTER TABLE `sub_assets`
   MODIFY `sub_asset` int(11) NOT NULL AUTO_INCREMENT;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+

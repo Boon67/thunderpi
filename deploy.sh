@@ -19,16 +19,21 @@ source "$SCRIPTDIR/$CONFIGFILENAME"
 #apt purge phpmyadmin -y
 #apt purge apache2 -y
 #apt purge mariadb-server -y
-#apt install mariadb-server -y
-#apt install apache2 -y
-#apt install phpmyadmin -y
+#apt autoremove -y
+apt install mariadb-server -y
+apt install apache2 -y
+apt install php libapache2-mod-php -y
+service apache2 restart
+apt install phpmyadmin -y
+service apache2 restart
+
 
 ###################################
 echo "------------Configuring Database------------"]
 MYSQL='which mysql'
 $MYSQL -e 'source ./schema.sql'
-exit
-#mysql_secure_installation
+
+mysql_secure_installation
 #sudo dpkg-reconfigure phpmyadmin
 ###################################
 
